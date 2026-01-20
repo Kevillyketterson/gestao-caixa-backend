@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../db');
 
 // =======================
-// CRIAR TABELA
+// CRIAR TABELA (apenas uma vez)
 // =======================
 pool.query(`
   CREATE TABLE IF NOT EXISTS clientes (
@@ -31,7 +31,6 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { nome } = req.body;
-
     if (!nome) return res.status(400).json({ error: 'Nome obrigatório' });
 
     const result = await pool.query(
