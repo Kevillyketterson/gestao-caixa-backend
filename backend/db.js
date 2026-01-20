@@ -1,8 +1,9 @@
+// db.js
 const { Pool } = require('pg');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // necessário para Render
+  ssl: { rejectUnauthorized: false } // Render exige SSL
 });
 
 pool.on('connect', () => console.log('✅ Conectado ao banco de dados!'));
