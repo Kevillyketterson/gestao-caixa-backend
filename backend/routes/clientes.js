@@ -10,16 +10,14 @@ pool.query(`
     id SERIAL PRIMARY KEY,
     nome TEXT NOT NULL
   )
-`);
+`).catch(err => console.error('Erro ao criar tabela clientes:', err));
 
 // =======================
 // LISTAR CLIENTES
 // =======================
 router.get('/', async (req, res) => {
   try {
-    const result = await pool.query(
-      'SELECT * FROM clientes ORDER BY id DESC'
-    );
+    const result = await pool.query('SELECT * FROM clientes ORDER BY id DESC');
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -34,9 +32,7 @@ router.post('/', async (req, res) => {
   try {
     const { nome } = req.body;
 
-    if (!nome) {
-      return res.status(400).json({ error: 'Nome obrigatório' });
-    }
+    if (!nome) return res.status(400).json({ error: 'Nome obrigatório' });
 
     const result = await pool.query(
       'INSERT INTO clientes (nome) VALUES ($1) RETURNING *',
