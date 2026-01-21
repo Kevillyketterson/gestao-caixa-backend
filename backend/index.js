@@ -13,13 +13,12 @@ const app = express();
 // CORS
 // =======================
 app.use(cors({
-  origin: '*' // pode restringir para a URL do frontend se quiser
+  origin: '*' // pode restringir para a URL do frontend
 }));
-
 app.use(express.json());
 
 // =======================
-// Health Check
+// Health check
 // =======================
 app.get('/health', (req,res)=>{
   res.json({status:'ok', message:'API rodando 🚀'});
@@ -40,7 +39,6 @@ app.listen(PORT, async ()=>{
   console.log(`🚀 API rodando na porta ${PORT}`);
 
   try {
-    // Criar tabelas se não existirem
     await pool.query(`
       CREATE TABLE IF NOT EXISTS clientes (
         id SERIAL PRIMARY KEY,
@@ -62,7 +60,7 @@ app.listen(PORT, async ()=>{
       );
     `);
     console.log('✅ Tabelas criadas!');
-  } catch(err) {
+  } catch(err){
     console.error('Erro ao criar tabelas:', err);
   }
 });
