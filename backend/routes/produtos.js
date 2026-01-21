@@ -26,4 +26,18 @@ router.post('/', async (req,res)=>{
   }
 });
 
+// Deletar produto
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('DELETE FROM produtos WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Erro ao deletar produto:', err);
+    res.status(500).json({ error: 'Erro ao deletar produto' });
+  }
+});
+
+
 module.exports = router;
+
