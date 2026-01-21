@@ -8,20 +8,33 @@ const vendasRoutes   = require('./routes/vendas');
 const pool = require('./db');
 
 const app = express();
-app.use(cors());
+
+// =======================
+// CORS
+// =======================
+app.use(cors({
+  origin: '*' // pode restringir para a URL do frontend se quiser
+}));
+
 app.use(express.json());
 
-// Health check
+// =======================
+// Health Check
+// =======================
 app.get('/health', (req,res)=>{
   res.json({status:'ok', message:'API rodando 🚀'});
 });
 
+// =======================
 // Rotas
+// =======================
 app.use('/clientes', clientesRoutes);
 app.use('/produtos', produtosRoutes);
 app.use('/vendas', vendasRoutes);
 
+// =======================
 // Start server
+// =======================
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, async ()=>{
   console.log(`🚀 API rodando na porta ${PORT}`);
