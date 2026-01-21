@@ -26,4 +26,18 @@ router.post('/', async (req,res)=>{
   }
 });
 
+// Deletar cliente
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('DELETE FROM clientes WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Erro ao deletar cliente:', err);
+    res.status(500).json({ error: 'Erro ao deletar cliente' });
+  }
+});
+
+
 module.exports = router;
+
